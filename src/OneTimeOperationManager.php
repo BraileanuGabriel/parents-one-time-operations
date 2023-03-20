@@ -1,6 +1,6 @@
 <?php
 
-namespace TimoKoerber\LaravelOneTimeOperations;
+namespace EBS\ParentsOneTimeOperations;
 
 use Illuminate\Contracts\Filesystem\FileNotFoundException;
 use Illuminate\Support\Collection;
@@ -10,7 +10,7 @@ use Illuminate\Support\Facades\File;
 use Illuminate\Support\Str;
 use SplFileInfo;
 use Symfony\Component\Finder\Exception\DirectoryNotFoundException;
-use TimoKoerber\LaravelOneTimeOperations\Models\Operation;
+use EBS\ParentsOneTimeOperations\Models\Operation;
 
 class OneTimeOperationManager
 {
@@ -21,7 +21,9 @@ class OneTimeOperationManager
     {
         $operationFiles = self::getUnprocessedFiles();
 
-        return $operationFiles->map(fn (SplFileInfo $file) => OneTimeOperationFile::make($file));
+        return $operationFiles->map(function (SplFileInfo $file) {
+            return OneTimeOperationFile::make($file);
+        });
     }
 
     /**
@@ -31,7 +33,9 @@ class OneTimeOperationManager
     {
         $operationFiles = self::getAllFiles();
 
-        return $operationFiles->map(fn (SplFileInfo $file) => OneTimeOperationFile::make($file));
+        return $operationFiles->map(function (SplFileInfo $file) {
+            return OneTimeOperationFile::make($file);
+        });
     }
 
     /**
@@ -72,6 +76,9 @@ class OneTimeOperationManager
         return Operation::whereName($operationName)->first();
     }
 
+    /**
+     * @throws \Throwable
+     */
     public static function getOperationFileByModel(Operation $operationModel): OneTimeOperationFile
     {
         $filepath = self::pathToFileByName($operationModel->name);
@@ -88,7 +95,7 @@ class OneTimeOperationManager
     {
         $filepath = self::pathToFileByName($operationName);
 
-        throw_unless(File::exists($filepath), FileNotFoundException::class, sprintf('File %s does not exist', self::buildFilename($operationName)));
+        throw_unless(File::exists($filepath), FileNotFoundException::class, (array)sprintf('File %s does not exist', self::buildFilename($operationName)));
 
         return OneTimeOperationFile::make(new SplFileInfo($filepath));
     }
@@ -115,7 +122,7 @@ class OneTimeOperationManager
 
     public static function getOperationNameFromFilename(string $filename): string
     {
-        return str($filename)->remove('.php');
+        return substr($filename, 0, strpos($filename, ".php"));
     }
 
     public static function getTableName(): string

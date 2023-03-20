@@ -1,10 +1,10 @@
 <?php
 
-namespace TimoKoerber\LaravelOneTimeOperations\Commands;
+namespace EBS\ParentsOneTimeOperations\Commands;
 
 use Throwable;
-use TimoKoerber\LaravelOneTimeOperations\Models\Operation;
-use TimoKoerber\LaravelOneTimeOperations\OneTimeOperationManager;
+use EBS\ParentsOneTimeOperations\Models\Operation;
+use EBS\ParentsOneTimeOperations\OneTimeOperationManager;
 
 class OneTimeOperationShowCommand extends OneTimeOperationsCommand
 {
@@ -12,7 +12,7 @@ class OneTimeOperationShowCommand extends OneTimeOperationsCommand
 
     protected $description = 'List of all one-time operations';
 
-    protected array $validFilters = [
+    protected $validFilters = [
         self::LABEL_PENDING,
         self::LABEL_PROCESSED,
         self::LABEL_DISPOSED,
@@ -62,8 +62,12 @@ class OneTimeOperationShowCommand extends OneTimeOperationsCommand
      */
     protected function validateFilters(): void
     {
-        $filters = array_map(fn ($filter) => strtolower($filter), $this->argument('filter'));
-        $validFilters = array_map(fn ($filter) => strtolower($filter), $this->validFilters);
+        $filters = array_map(function ($filter) {
+            return strtolower($filter);
+        }, $this->argument('filter'));
+        $validFilters = array_map(function ($filter) {
+            return strtolower($filter);
+        }, $this->validFilters);
 
         throw_if(array_diff($filters, $validFilters), \Exception::class, 'Given filter is not valid. Allowed filters: '.implode('|', array_map('strtolower', $this->validFilters)));
     }
@@ -76,7 +80,9 @@ class OneTimeOperationShowCommand extends OneTimeOperationsCommand
             return true;
         }
 
-        $givenFilters = array_map(fn ($filter) => strtolower($filter), $givenFilters);
+        $givenFilters = array_map(function ($filter) {
+            return strtolower($filter);
+        }, $givenFilters);
 
         return in_array(strtolower($filterName), $givenFilters);
     }

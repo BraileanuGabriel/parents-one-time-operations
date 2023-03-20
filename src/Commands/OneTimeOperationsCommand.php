@@ -1,19 +1,23 @@
 <?php
 
-namespace TimoKoerber\LaravelOneTimeOperations\Commands;
+namespace EBS\ParentsOneTimeOperations\Commands;
 
 use Illuminate\Console\Command;
-use TimoKoerber\LaravelOneTimeOperations\OneTimeOperationManager;
+use EBS\ParentsOneTimeOperations\OneTimeOperationManager;
 
 abstract class OneTimeOperationsCommand extends Command
 {
+    protected const SUCCESS = 'SUCCESS';
+
+    protected const FAILURE = 'FAILURE';
+
     protected const LABEL_PROCESSED = 'PROCESSED';
 
     protected const LABEL_PENDING = 'PENDING';
 
     protected const LABEL_DISPOSED = 'DISPOSED';
 
-    protected string $operationsDirectory;
+    protected $operationsDirectory;
 
     public function __construct()
     {

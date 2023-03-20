@@ -1,16 +1,13 @@
 <?php
 
-namespace  TimoKoerber\LaravelOneTimeOperations\Models;
+namespace  EBS\ParentsOneTimeOperations\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use TimoKoerber\LaravelOneTimeOperations\Models\Factories\OperationFactory;
-use TimoKoerber\LaravelOneTimeOperations\OneTimeOperationManager;
+use EBS\ParentsOneTimeOperations\Models\Factories\OperationFactory;
+use EBS\ParentsOneTimeOperations\OneTimeOperationManager;
 
 class Operation extends Model
 {
-    use HasFactory;
-
     public $timestamps = false;
 
     public const DISPATCHED_ASYNC = 'async';
@@ -32,11 +29,6 @@ class Operation extends Model
         parent::__construct($attributes);
 
         $this->table = OneTimeOperationManager::getTableName();
-    }
-
-    protected static function newFactory(): OperationFactory
-    {
-        return new OperationFactory();
     }
 
     public static function storeOperation(string $operation, bool $async): self

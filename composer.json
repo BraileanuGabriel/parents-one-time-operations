@@ -1,5 +1,5 @@
 {
-    "name": "timokoerber/laravel-one-time-operations",
+    "name": "ebs/parents-one-time-operations",
     "description": "Run operations once after deployment - just like you do it with migrations!",
     "keywords": [
         "laravel",
@@ -11,40 +11,28 @@
     "license": "MIT",
     "authors": [
         {
-            "name": "timo.koerber",
-            "email": "koerber.timo@gmail.com",
-            "homepage": "https://www.timokoerber.com",
+            "name": "BraileanuGabriel",
+            "email": "gbraileanu15@gmail.com",
             "role": "Developer"
         }
     ],
     "homepage": "https://github.com/timokoerber/laravel-one-time-operations",
     "require": {
-        "php": "^8.0",
-        "illuminate/support": "^9.0|^10.0"
-    },
-    "require-dev": {
-        "phpunit/phpunit": "^9.4",
-        "orchestra/testbench": "7"
+        "php": "^7.2",
+        "laravel/framework": "^v6.20.44"
     },
     "minimum-stability": "dev",
     "prefer-stable": true,
     "autoload": {
         "psr-4": {
-            "TimoKoerber\\LaravelOneTimeOperations\\": "src/"
+            "EBS\\ParentsOneTimeOperations\\": "src/"
         }
     },
     "autoload-dev": {
         "psr-4": {
-            "TimoKoerber\\LaravelOneTimeOperations\\Tests\\": "tests",
-            "TimoKoerber\\LaravelOneTimeOperations\\Tests\\Feature\\": "tests/Feature"
+            "EBS\\ParentsOneTimeOperations\\Tests\\": "tests",
+            "EBS\\ParentsOneTimeOperations\\Tests\\Feature\\": "tests/Feature"
         }
-    },
-    "scripts": {
-        "post-autoload-dump": [
-            "@php vendor/bin/testbench package:discover --ansi"
-        ],
-        "test": "./vendor/bin/phpunit",
-        "test-coverage": "./vendor/bin/phpunit --coverage-html coverage"
     },
     "config": {
         "sort-packages": true
@@ -52,7 +40,7 @@
     "extra": {
         "laravel": {
             "providers": [
-                "TimoKoerber\\LaravelOneTimeOperations\\Providers\\OneTimeOperationsServiceProvider"
+                "EBS\\ParentsOneTimeOperations\\Providers\\OneTimeOperationsServiceProvider"
             ]
         }
     }

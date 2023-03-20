@@ -1,6 +1,6 @@
 <?php
 
-namespace TimoKoerber\LaravelOneTimeOperations;
+namespace EBS\ParentsOneTimeOperations;
 
 use ErrorException;
 use Illuminate\Support\Carbon;
@@ -9,11 +9,11 @@ use Illuminate\Support\Str;
 
 class OneTimeOperationCreator
 {
-    protected string $operationsDirectory;
+    protected $operationsDirectory;
 
-    protected string $providedName;
+    protected $providedName;
 
-    protected string $operationName = '';
+    protected $operationName = '';
 
     public function __construct()
     {
@@ -40,7 +40,7 @@ class OneTimeOperationCreator
         $stub = $this->getStubFilepath();
         $this->ensureDirectoryExists();
 
-        throw_if(File::exists($path), ErrorException::class, sprintf('File already exists: %s', $path));
+        throw_if(File::exists($path), ErrorException::class, (array)sprintf('File already exists: %s', $path));
 
         File::put($path, $stub);
 

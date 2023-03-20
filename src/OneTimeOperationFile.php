@@ -1,17 +1,17 @@
 <?php
 
-namespace TimoKoerber\LaravelOneTimeOperations;
+namespace EBS\ParentsOneTimeOperations;
 
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Str;
 use SplFileInfo;
-use TimoKoerber\LaravelOneTimeOperations\Models\Operation;
+use EBS\ParentsOneTimeOperations\Models\Operation;
 
 class OneTimeOperationFile
 {
-    protected SplFileInfo $file;
+    protected $file;
 
-    protected ?OneTimeOperation $classObject = null;
+    protected $classObject = null;
 
     public static function make(SplFileInfo $file): self
     {

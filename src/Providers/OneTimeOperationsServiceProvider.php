@@ -1,11 +1,11 @@
 <?php
 
-namespace TimoKoerber\LaravelOneTimeOperations\Providers;
+namespace EBS\ParentsOneTimeOperations\Providers;
 
 use Illuminate\Support\ServiceProvider;
-use TimoKoerber\LaravelOneTimeOperations\Commands\OneTimeOperationShowCommand;
-use TimoKoerber\LaravelOneTimeOperations\Commands\OneTimeOperationsMakeCommand;
-use TimoKoerber\LaravelOneTimeOperations\Commands\OneTimeOperationsProcessCommand;
+use EBS\ParentsOneTimeOperations\Commands\OneTimeOperationShowCommand;
+use EBS\ParentsOneTimeOperations\Commands\OneTimeOperationsMakeCommand;
+use EBS\ParentsOneTimeOperations\Commands\OneTimeOperationsProcessCommand;
 
 class OneTimeOperationsServiceProvider extends ServiceProvider
 {

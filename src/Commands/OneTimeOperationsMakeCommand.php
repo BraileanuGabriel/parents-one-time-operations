@@ -1,9 +1,9 @@
 <?php
 
-namespace TimoKoerber\LaravelOneTimeOperations\Commands;
+namespace EBS\ParentsOneTimeOperations\Commands;
 
 use Throwable;
-use TimoKoerber\LaravelOneTimeOperations\OneTimeOperationCreator;
+use EBS\ParentsOneTimeOperations\OneTimeOperationCreator;
 
 class OneTimeOperationsMakeCommand extends OneTimeOperationsCommand
 {

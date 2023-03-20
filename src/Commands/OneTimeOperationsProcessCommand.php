@@ -1,11 +1,11 @@
 <?php
 
-namespace TimoKoerber\LaravelOneTimeOperations\Commands;
+namespace EBS\ParentsOneTimeOperations\Commands;
 
-use TimoKoerber\LaravelOneTimeOperations\Jobs\OneTimeOperationProcessJob;
-use TimoKoerber\LaravelOneTimeOperations\Models\Operation;
-use TimoKoerber\LaravelOneTimeOperations\OneTimeOperationFile;
-use TimoKoerber\LaravelOneTimeOperations\OneTimeOperationManager;
+use EBS\ParentsOneTimeOperations\Jobs\OneTimeOperationProcessJob;
+use EBS\ParentsOneTimeOperations\Models\Operation;
+use EBS\ParentsOneTimeOperations\OneTimeOperationFile;
+use EBS\ParentsOneTimeOperations\OneTimeOperationManager;
 
 class OneTimeOperationsProcessCommand extends OneTimeOperationsCommand
 {
@@ -17,9 +17,9 @@ class OneTimeOperationsProcessCommand extends OneTimeOperationsCommand
 
     protected $description = 'Process all unprocessed one-time operations';
 
-    protected bool $forceAsync = false;
+    protected $forceAsync = false;
 
-    protected bool $forceSync = false;
+    protected $forceSync = false;
 
     public function handle(): int
     {
