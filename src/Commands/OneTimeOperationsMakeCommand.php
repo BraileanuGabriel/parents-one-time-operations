@@ -15,11 +15,11 @@ class OneTimeOperationsMakeCommand extends OneTimeOperationsCommand
     {
         try {
             $file = OneTimeOperationCreator::createOperationFile($this->argument('name'));
-            $this->components->info(sprintf('One-time operation [%s] created successfully.', $file->getOperationName()));
+            $this->info(sprintf('One-time operation [%s] created successfully.', $file->getOperationName()));
 
             return self::SUCCESS;
         } catch (Throwable $e) {
-            $this->components->warn($e->getMessage());
+            $this->warn($e->getMessage());
 
             return self::FAILURE;
         }

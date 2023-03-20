@@ -25,33 +25,33 @@ class OneTimeOperationShowCommand extends OneTimeOperationsCommand
 
             $operationModels = Operation::all();
             $operationFiles = OneTimeOperationManager::getAllOperationFiles();
-            $this->newLine();
+            $this->info("\n");
 
             foreach ($operationModels as $operation) {
                 if (OneTimeOperationManager::fileExistsByName($operation->name)) {
                     continue;
                 }
 
-                $this->shouldDisplay(self::LABEL_DISPOSED) && $this->components->twoColumnDetail($operation->name, $this->gray($operation->processed_at).' '.$this->green(self::LABEL_DISPOSED));
+                $this->shouldDisplay(self::LABEL_DISPOSED) && $this->table([$this->default($operation->name), $this->white($operation->processed_at).' '.$this->green(self::LABEL_DISPOSED)], []);
             }
 
             foreach ($operationFiles->toArray() as $file) {
                 if ($model = $file->getModel()) {
-                    $this->shouldDisplay(self::LABEL_PROCESSED) && $this->components->twoColumnDetail($model->name, $this->gray($model->processed_at).' '.$this->brightgreen(self::LABEL_PROCESSED));
+                    $this->shouldDisplay(self::LABEL_PROCESSED) &&  $this->table([$this->default($model->name), $this->white($model->processed_at).' '.$this->green(self::LABEL_PROCESSED)], []);
                 } else {
-                    $this->shouldDisplay(self::LABEL_PENDING) && $this->components->twoColumnDetail($file->getOperationName(), $this->white(self::LABEL_PENDING));
+                    $this->shouldDisplay(self::LABEL_PENDING) && $this->table([$this->default($file->getOperationName()), $this->default(self::LABEL_PENDING)], []);
                 }
             }
 
             if ($operationModels->isEmpty() && $operationFiles->isEmpty()) {
-                $this->components->info('No operations found.');
+                $this->info('No operations found.');
             }
 
-            $this->newLine();
+            $this->info("\n");
 
             return self::SUCCESS;
         } catch (Throwable $e) {
-            $this->components->error($e->getMessage());
+            $this->error($e->getMessage());
 
             return self::FAILURE;
         }
@@ -69,7 +69,9 @@ class OneTimeOperationShowCommand extends OneTimeOperationsCommand
             return strtolower($filter);
         }, $this->validFilters);
 
-        throw_if(array_diff($filters, $validFilters), \Exception::class, 'Given filter is not valid. Allowed filters: '.implode('|', array_map('strtolower', $this->validFilters)));
+        if(array_diff($filters, $validFilters)){
+            throw new \Exception('Given filter is not valid. Allowed filters: '.implode('|', array_map('strtolower', $this->validFilters)));
+        }
     }
 
     protected function shouldDisplay(string $filterName): bool

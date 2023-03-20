@@ -3,7 +3,6 @@
 namespace  EBS\ParentsOneTimeOperations\Models;
 
 use Illuminate\Database\Eloquent\Model;
-use EBS\ParentsOneTimeOperations\Models\Factories\OperationFactory;
 use EBS\ParentsOneTimeOperations\OneTimeOperationManager;
 
 class Operation extends Model
@@ -31,17 +30,12 @@ class Operation extends Model
         $this->table = OneTimeOperationManager::getTableName();
     }
 
-    public static function storeOperation(string $operation, bool $async): self
+    public static function storeOperation(string $operation): self
     {
         return self::firstOrCreate([
             'name' => $operation,
-            'dispatched' => $async ? self::DISPATCHED_ASYNC : self::DISPATCHED_SYNC,
+            'dispatched' => self::DISPATCHED_SYNC,
             'processed_at' => now(),
         ]);
-    }
-
-    public function getFilePathAttribute(): string
-    {
-        return OneTimeOperationManager::pathToFileByName($this->name);
     }
 }

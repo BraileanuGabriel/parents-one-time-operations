@@ -4,6 +4,8 @@ namespace EBS\ParentsOneTimeOperations\Commands;
 
 use Illuminate\Console\Command;
 use EBS\ParentsOneTimeOperations\OneTimeOperationManager;
+use Symfony\Component\Console\Output\OutputInterface;
+use Throwable;
 
 abstract class OneTimeOperationsCommand extends Command
 {
@@ -22,28 +24,7 @@ abstract class OneTimeOperationsCommand extends Command
     public function __construct()
     {
         parent::__construct();
-
         $this->operationsDirectory = OneTimeOperationManager::getDirectoryPath();
-    }
-
-    protected function bold(string $message): string
-    {
-        return sprintf('<options=bold>%s</>', $message);
-    }
-
-    protected function lightgray(string $message): string
-    {
-        return sprintf('<fg=white>%s</>', $message);
-    }
-
-    protected function gray(string $message): string
-    {
-        return sprintf('<fg=gray>%s</>', $message);
-    }
-
-    protected function brightgreen(string $message): string
-    {
-        return sprintf('<fg=bright-green>%s</>', $message);
     }
 
     protected function green(string $message): string
@@ -53,11 +34,47 @@ abstract class OneTimeOperationsCommand extends Command
 
     protected function white(string $message): string
     {
-        return sprintf('<fg=bright-white>%s</>', $message);
+        return sprintf('<fg=white>%s</>', $message);
     }
 
-    protected function grayBadge(string $message): string
+    protected function default(string $message): string
     {
-        return sprintf('<fg=#fff;bg=gray>%s</>', $message);
+        return sprintf('<fg=default>%s</>', $message);
+    }
+
+    /**
+     * @throws Throwable
+     */
+    protected function task($description, $task = null, $verbosity = OutputInterface::VERBOSITY_NORMAL){
+
+        $descriptionWidth = mb_strlen(preg_replace("/\<[\w=#\/\;,:.&,%?]+\>|\\e\[\d+m/", '$1', $description) ?? '');
+
+        $this->output->write("  $description ", false, $verbosity);
+
+        $startTime = microtime(true);
+
+        $result = false;
+
+        try {
+            $result = ($task ?: function () {
+                return true;
+            })();
+        } finally {
+            $runTime = $task
+                ? (' '.number_format((microtime(true) - $startTime) * 1000).'ms')
+                : '';
+
+            $runTimeWidth = mb_strlen($runTime);
+            $width = 150;
+            $dots = max($width - $descriptionWidth - $runTimeWidth - 10, 0);
+
+            $this->output->write(str_repeat($this->white('.'), $dots), false, $verbosity);
+            $this->output->write($this->white($runTime), false, $verbosity);
+
+            $this->output->writeln(
+                $result !== false ? ' <fg=green;options=bold>DONE</>' : ' <fg=red;options=bold>FAIL</>',
+                $verbosity
+            );
+        }
     }
 }
