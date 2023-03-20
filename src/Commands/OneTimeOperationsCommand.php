@@ -9,9 +9,9 @@ use Throwable;
 
 abstract class OneTimeOperationsCommand extends Command
 {
-    protected const SUCCESS = 'SUCCESS';
+    protected const SUCCESS = 1;
 
-    protected const FAILURE = 'FAILURE';
+    protected const FAILURE = 0;
 
     protected const LABEL_PROCESSED = 'PROCESSED';
 
