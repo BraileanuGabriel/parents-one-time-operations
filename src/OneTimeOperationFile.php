@@ -3,7 +3,6 @@
 namespace EBS\ParentsOneTimeOperations;
 
 use Illuminate\Support\Facades\File;
-use Illuminate\Support\Str;
 use SplFileInfo;
 use EBS\ParentsOneTimeOperations\Models\Operation;
 
@@ -28,7 +27,7 @@ class OneTimeOperationFile
         $pathElements = explode(DIRECTORY_SEPARATOR, $this->file->getRealPath());
         $filename = end($pathElements);
 
-        return Str::remove('.php', $filename);
+        return substr($filename, 0, strpos($filename, ".php"));;
     }
 
     public function getClassObject(): OneTimeOperation

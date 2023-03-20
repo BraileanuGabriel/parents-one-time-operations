@@ -5,7 +5,6 @@ namespace EBS\ParentsOneTimeOperations;
 use ErrorException;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\File;
-use Illuminate\Support\Str;
 
 class OneTimeOperationCreator
 {
@@ -73,7 +72,7 @@ class OneTimeOperationCreator
 
     protected function initOperationName(): void
     {
-        $this->operationName = $this->getDatePrefix().'_'.Str::snake($this->providedName).'.php';
+        $this->operationName = $this->getDatePrefix().'_'.strtolower(preg_replace('/(?<!^)[A-Z]/', '_$0', $this->providedName)).'.php';
     }
 
     protected function ensureDirectoryExists(): void

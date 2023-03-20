@@ -7,7 +7,6 @@ use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Config;
 use Illuminate\Support\Facades\File;
-use Illuminate\Support\Str;
 use SplFileInfo;
 use Symfony\Component\Finder\Exception\DirectoryNotFoundException;
 use EBS\ParentsOneTimeOperations\Models\Operation;
@@ -117,7 +116,7 @@ class OneTimeOperationManager
 
     public static function getDirectoryPath(): string
     {
-        return App::basePath(Str::of(self::getDirectoryName())->rtrim('/')).DIRECTORY_SEPARATOR;
+        return App::basePath().trim(self::getDirectoryName()).DIRECTORY_SEPARATOR;
     }
 
     public static function getOperationNameFromFilename(string $filename): string
