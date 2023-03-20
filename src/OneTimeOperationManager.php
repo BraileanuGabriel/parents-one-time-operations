@@ -111,12 +111,12 @@ class OneTimeOperationManager
 
     public static function getDirectoryName(): string
     {
-        return Config::get('one-time-operations.directory');
+        return database_path(Config::get('one-time-operations.directory'));
     }
 
     public static function getDirectoryPath(): string
     {
-        return App::basePath().trim(self::getDirectoryName()).DIRECTORY_SEPARATOR;
+        return self::getDirectoryName() . '/';
     }
 
     public static function getOperationNameFromFilename(string $filename): string
