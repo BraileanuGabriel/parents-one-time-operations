@@ -46,9 +46,12 @@ class OneTimeOperationsProcessCommand extends OneTimeOperationsCommand
         }
     }
 
+    /**
+     * @throws \Throwable
+     */
     protected function processOperationFile(OneTimeOperationFile $operationFile): int
     {
-        $this->components->task($operationFile->getOperationName(), function () use ($operationFile) {
+        $this->task($operationFile->getOperationName(), function () use ($operationFile) {
             $this->processOperation($operationFile);
             $this->storeOperation($operationFile);
         });

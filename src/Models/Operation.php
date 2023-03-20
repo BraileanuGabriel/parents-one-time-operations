@@ -7,20 +7,9 @@ use EBS\ParentsOneTimeOperations\OneTimeOperationManager;
 
 class Operation extends Model
 {
-    public $timestamps = false;
-
-    public const DISPATCHED_ASYNC = 'async';
-
-    public const DISPATCHED_SYNC = 'sync';
-
     protected $fillable = [
         'name',
         'dispatched',
-        'processed_at',
-    ];
-
-    protected $casts = [
-        'processed_at' => 'datetime',
     ];
 
     public function __construct(array $attributes = [])
@@ -32,10 +21,6 @@ class Operation extends Model
 
     public static function storeOperation(string $operation): self
     {
-        return self::firstOrCreate([
-            'name' => $operation,
-            'dispatched' => self::DISPATCHED_SYNC,
-            'processed_at' => now(),
-        ]);
+        return self::firstOrCreate(['name' => $operation,]);
     }
 }
