@@ -17,19 +17,14 @@ class OneTimeOperationShowCommand extends OneTimeOperationsCommand
         try {
 
             $operationModels = Operation::all();
-            $operationFiles = OneTimeOperationManager::getAllOperationFiles();
             $this->info("\n");
 
-            if ($operationModels->isEmpty() && $operationFiles->isEmpty()) {
+            if ($operationModels->isEmpty()) {
                 $this->info('No operations found.');
             }
 
             $data = [];
             foreach ($operationModels as $operation) {
-                if (OneTimeOperationManager::fileExistsByName($operation->name)) {
-                    continue;
-                }
-
                 $data[] = [
                     'name' => $this->green($operation->name),
                     'created_at' => $this->white($operation->created_at)

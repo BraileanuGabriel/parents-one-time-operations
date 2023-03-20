@@ -4,7 +4,6 @@ namespace EBS\ParentsOneTimeOperations;
 
 use Illuminate\Contracts\Filesystem\FileNotFoundException;
 use Illuminate\Support\Collection;
-use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Config;
 use Illuminate\Support\Facades\File;
 use SplFileInfo;
@@ -19,18 +18,6 @@ class OneTimeOperationManager
     public static function getUnprocessedOperationFiles(): Collection
     {
         $operationFiles = self::getUnprocessedFiles();
-
-        return $operationFiles->map(function (SplFileInfo $file) {
-            return OneTimeOperationFile::make($file);
-        });
-    }
-
-    /**
-     * @return Collection<SplFileInfo>
-     */
-    public static function getAllOperationFiles(): Collection
-    {
-        $operationFiles = self::getAllFiles();
 
         return $operationFiles->map(function (SplFileInfo $file) {
             return OneTimeOperationFile::make($file);
@@ -102,11 +89,6 @@ class OneTimeOperationManager
     public static function pathToFileByName(string $operationName): string
     {
         return self::getDirectoryPath().self::buildFilename($operationName);
-    }
-
-    public static function fileExistsByName(string $operationName): bool
-    {
-        return File::exists(self::pathToFileByName($operationName));
     }
 
     public static function getDirectoryName(): string
