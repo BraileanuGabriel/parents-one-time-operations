@@ -25,8 +25,9 @@ class OneTimeOperationShowCommand extends OneTimeOperationsCommand
 
             $data = [];
             foreach ($operationModels as $operation) {
+                $operationName = str_replace('_', '', ucwords(preg_replace('/\d+/u', '', $operation->name), '_'));
                 $data[] = [
-                    'name' => $this->green($operation->name),
+                    'name' => $this->green($operationName),
                     'created_at' => $this->white($operation->created_at)
                 ];
             }
